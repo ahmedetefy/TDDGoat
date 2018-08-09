@@ -9,9 +9,11 @@
 			<input id="id_new_item" name="item_text" placeholder="Enter a to-do item" />
 		</form>
 		<table id="id_list_table">
+			{% for item in item_list %}
 			<tr>
-				<td>1: {{ new_item_text }}</td>
+				<td>1: {{ item }}</td>
 			</tr>
+			{% endfor %}
     	</table>
 	</body>
 </html>
