@@ -11,7 +11,7 @@
 		<table id="id_list_table">
 			{% for item in item_list %}
 			<tr>
-				<td>1: {{ item }}</td>
+				<td>{{ forloop.counter }}: {{ item.text }}</td>
 			</tr>
 			{% endfor %}
     	</table>

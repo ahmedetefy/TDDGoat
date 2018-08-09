@@ -11,6 +11,6 @@ def home_page(request):
         return redirect('/')
 
     return render(request, "home.html", {
-        'items': Item.objects.all()
+        'item_list': Item.objects.all()
         })
     
