@@ -17,9 +17,9 @@ eg, on Ubuntu 16.04:
 ## Nginx Virtual Host Config
 
 * cd /etc/nginx/sites-available/
-* sudo vim <DOMAIN>
-* Add nginx.template.conf and rename file to <DOMAIN>
-* export SITENAME=<DOMAIN>
+* sudo vim DOMAIN
+* Add nginx.template.conf and rename file to DOMAIN
+* export SITENAME=DOMAIN
 * cd /etc/nginx/sites-enabled
 * sudo ln -s /etc/nginx/sites-available/$SITENAME $SITENAME
 * sudo rm /etc/nginx/sites-enabled/default
@@ -34,25 +34,25 @@ eg, on Ubuntu 16.04:
 ## Create a Systemd Service
 
 * cd /etc/systemd/system/
-* sudo vim _<DOMAIN>.service
+* sudo vim DOMAIN.service
 * Check gunicorn-systemd.template.service
 * sudo systemctl daemon-reload
-* sudo systemctl enable <DOMAIN>
-* sudo systemctl start <DOMAIN>
+* sudo systemctl enable DOMAIN
+* sudo systemctl start DOMAIN
 
 ## Folder Structure
 
 Assume we have a user account at /home/username
 
 /home/username
-└── sites
-    ├── DOMAIN1
-    │    ├── .env
-    │    ├── db.sqlite3
-    │    ├── manage.py etc
-    │    ├── static
-    │    └── virtualenv
-    └── DOMAIN2
-         ├── .env
-         ├── db.sqlite3
-         ├── etc
+└── sites  
+    ├── DOMAIN1  
+    │    ├── .env  
+    │    ├── db.sqlite3  
+    │    ├── manage.py etc  
+    │    ├── static  
+    │    └── virtualenv  
+    └── DOMAIN2  
+         ├── .env  
+         ├── db.sqlite3  
+         ├── etc  
