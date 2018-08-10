@@ -34,7 +34,7 @@ eg, on Ubuntu 16.04:
 ## Create a Systemd Service
 
 * cd /etc/systemd/system/
-* sudo vim <DOMAIN>.service
+* sudo vim _<DOMAIN>.service
 * Check gunicorn-systemd.template.service
 * sudo systemctl daemon-reload
 * sudo systemctl enable <DOMAIN>
