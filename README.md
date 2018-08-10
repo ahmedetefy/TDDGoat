@@ -6,11 +6,8 @@ Following Example Project in Obeying the Testing Goat Book
 
 book-example.staging.taibahegypt.com
 
-===========================
-=                         =
-= Provisioning a new site =
-=                         =
-===========================
+Provisioning a new site
+=======================
 
 ## Required Packages
 
