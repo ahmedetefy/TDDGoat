@@ -10,20 +10,26 @@ Provisioning a new site
 
 eg, on Ubuntu 16.04:
 
-	sudo add-apt-repository ppa:deadsnakes/ppa
-	sudo apt update
-	sudo apt install nginx git python36 python3.6-venv
+```sh
+$ sudo add-apt-repository ppa:deadsnakes/ppa
+$ sudo apt update
+$ sudo apt install nginx git python36 python3.6-venv
+```
 
 ## Nginx Virtual Host Config
 
-* cd /etc/nginx/sites-available/
-* sudo vim DOMAIN
-* Add nginx.template.conf and rename file to DOMAIN
-* export SITENAME=DOMAIN
-* cd /etc/nginx/sites-enabled
-* sudo ln -s /etc/nginx/sites-available/$SITENAME $SITENAME
-* sudo rm /etc/nginx/sites-enabled/default
-* sudo systemctl reload nginx
+```sh
+$ cd /etc/nginx/sites-available/
+$ sudo vim DOMAIN
+```
+Then you should dd nginx.template.conf and rename file to DOMAIN
+```sh
+$ export SITENAME=DOMAIN
+$ cd /etc/nginx/sites-enabled
+$ sudo ln -s /etc/nginx/sites-available/$SITENAME $SITENAME
+$ sudo rm /etc/nginx/sites-enabled/default
+$ sudo systemctl reload nginx
+```
 
 ## Create Environment Variables 
 
@@ -33,26 +39,32 @@ eg, on Ubuntu 16.04:
 
 ## Create a Systemd Service
 
-* cd /etc/systemd/system/
-* sudo vim DOMAIN.service
+```sh
+$ cd /etc/systemd/system/
+$ sudo vim DOMAIN.service
+```
 * Check gunicorn-systemd.template.service
-* sudo systemctl daemon-reload
-* sudo systemctl enable DOMAIN
-* sudo systemctl start DOMAIN
+```sh
+$ sudo systemctl daemon-reload
+$ sudo systemctl enable DOMAIN
+$ sudo systemctl start DOMAIN
+```
 
 ## Folder Structure
 
 Assume we have a user account at /home/username
 
 /home/username  
-└── sites  
-    ├── DOMAIN1  
+```
+└── sites        
+    ├── DOMAIN1    
     │    ├── .env  
     │    ├── db.sqlite3  
     │    ├── manage.py etc  
     │    ├── static  
     │    └── virtualenv  
-    └── DOMAIN2  
+    └── DOMAIN2    
          ├── .env  
          ├── db.sqlite3  
          ├── etc  
+```
