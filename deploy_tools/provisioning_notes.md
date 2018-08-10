@@ -22,7 +22,7 @@ $ sudo apt install nginx git python36 python3.6-venv
 $ cd /etc/nginx/sites-available/
 $ sudo vim DOMAIN
 ```
-Then you should dd nginx.template.conf and rename file to DOMAIN
+Then you should add nginx.template.conf, proceeding that follow the following steps.
 ```sh
 $ export SITENAME=DOMAIN
 $ cd /etc/nginx/sites-enabled
@@ -43,7 +43,7 @@ $ sudo systemctl reload nginx
 $ cd /etc/systemd/system/
 $ sudo vim DOMAIN.service
 ```
-* Check gunicorn-systemd.template.service
+* Then you should add gunicorn-systemd.template.service, proceeding that follow the following steps.
 ```sh
 $ sudo systemctl daemon-reload
 $ sudo systemctl enable DOMAIN
