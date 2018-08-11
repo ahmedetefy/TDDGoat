@@ -6,6 +6,35 @@ from fabric.api import cd, env, local, run
 REPO_URL = 'https://github.com/ahmedetefy/TDDGoat.git'
 
 
+def provision():
+    site_folder = "/home/" + env.user + "/sites/" + env.host
+    with cd(site_folder):
+        _nginx_config()
+        _gunicorn_config()
+        _start_gunicorn_and_nginx()
+
+
+def _nginx_config():
+    run('cat ./deploy_tools/nginx.template.conf ' +
+        '| sed "s/DOMAIN/' + env.host + '/g" ' +
+        '| sudo tee /etc/nginx/sites-available/' + env.host)
+    run('sudo ln -s /etc/nginx/sites-available/' + env.host +
+        '/etc/nginx/' + env.host)
+
+
+def _gunicorn_config():
+    run('cat ./deploy_tools/gunicorn-systemd.template.service ' +
+        '| sed "s/DOMAIN/' + env.host + '/g" ' +
+        '| sudo tee /etc/systemd/system/gunicorn-' + env.host + '.service')
+
+
+def _start_gunicorn_and_nginx():
+    run('sudo systemctl daemon-reload')
+    run('sudo systemctl reload nginx')
+    run('sudo systemctl enable gunicorn-' + env.host)
+    run('sudo systemctl start gunicorn-' + env.host)
+
+
 # Run from local machine with the following command:
 # fab deploy -i '/home/etefy/Downloads/tutorial.pem'\
 # -H ubuntu@book-example.staging.taibahegypt.com
