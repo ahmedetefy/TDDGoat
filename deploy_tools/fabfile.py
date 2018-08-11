@@ -42,6 +42,7 @@ def _start_gunicorn_and_nginx():
 # Run from local machine with the following command:
 # fab deploy -i '/home/etefy/Downloads/tutorial.pem'\
 # -H ubuntu@book-example.staging.taibahegypt.com
+# ** Should be called before provision() **
 def deploy():
     site_folder = "/home/" + env.user + "/sites/" + env.host
     # -p tag serves two functions. First it ensures that even
