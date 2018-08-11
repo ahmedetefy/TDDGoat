@@ -50,7 +50,7 @@ def _create_or_update_dotenv():
     if 'SECRET_KEY' not in current_contents:
         # new_secret = (''.join(random.SystemRandom().choices(
         #     'abcdefghijklmnopqrstuvwxyz0123456789', k=50)))
-        run('echo SECRET_KEY=$(python3.6 -c"import random; print(''.join(random.SystemRandom().choices(\'abcdefghijklmnopqrstuvwxyz0123456789\', k=50)))") >> .env')
+        run('echo SECRET_KEY=$("python3.6 -c"import random; print(''.join(random.SystemRandom().choices(\'abcdefghijklmnopqrstuvwxyz0123456789\', k=50)))") >> .env')
         # append('.env', 'SECRET_KEY=' + new_secret)
 
 
