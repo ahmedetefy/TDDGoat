@@ -41,7 +41,7 @@ $ sudo systemctl reload nginx
 
 ```sh
 $ cd /etc/systemd/system/
-$ sudo vim DOMAIN.service
+$ sudo vim gunicorn-DOMAIN.service
 ```
 * Then you should add gunicorn-systemd.template.service, proceeding that follow the following steps.
 ```sh
