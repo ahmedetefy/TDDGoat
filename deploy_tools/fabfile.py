@@ -48,10 +48,9 @@ def _create_or_update_dotenv():
     # We cannot rely on the append's conditional logic here
     # because our new key and any potential existing one won't be same
     if 'SECRET_KEY' not in current_contents:
-        # new_secret = (''.join(random.SystemRandom().choices(
-        #     'abcdefghijklmnopqrstuvwxyz0123456789', k=50)))
-        run('echo SECRET_KEY=$(python3.6 -c"import random; print(''.join(random.SystemRandom().choices("abcdefghijklmnopqrstuvwxyz0123456789", k=50)))") >> .env')
-        # append('.env', 'SECRET_KEY=' + new_secret)
+        new_secret = (''.join(random.SystemRandom().choice(
+            'abcdefghijklmnopqrstuvwxyz0123456789', k=50)))
+        append('.env', 'SECRET_KEY=' + new_secret)
 
 
 def _update_static_files():
