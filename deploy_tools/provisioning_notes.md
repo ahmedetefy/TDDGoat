@@ -13,7 +13,7 @@ eg, on Ubuntu 16.04:
 ```sh
 $ sudo add-apt-repository ppa:deadsnakes/ppa
 $ sudo apt update
-$ sudo apt install nginx git python36 python3.6-venv
+$ sudo apt install nginx git python3.6 python3.6-venv
 ```
 
 ## Nginx Virtual Host Config
