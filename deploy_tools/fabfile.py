@@ -6,6 +6,10 @@ from fabric.api import cd, env, local, run
 REPO_URL = 'https://github.com/ahmedetefy/TDDGoat.git'
 
 
+# Run from local machine with the following command:
+# fab provision -i '/home/etefy/Downloads/tutorial.pem'\
+# -H ubuntu@book-example.staging.taibahegypt.com
+# Running it again will abort so its fine
 def provision():
     site_folder = "/home/" + env.user + "/sites/" + env.host
     with cd(site_folder):
@@ -19,7 +23,7 @@ def _nginx_config():
         '| sed "s/DOMAIN/' + env.host + '/g" ' +
         '| sudo tee /etc/nginx/sites-available/' + env.host)
     run('sudo ln -s /etc/nginx/sites-available/' + env.host +
-        '/etc/nginx/' + env.host)
+        ' /etc/nginx/sites-enabled/' + env.host)
 
 
 def _gunicorn_config():
