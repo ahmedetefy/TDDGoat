@@ -1,5 +1,18 @@
-from unittest import skip
-
+"""
+WHAT TO WRITE IN VIEWS TESTS:
+------------------------------
+1- USE THE DJANGO TEST CLIENT
+2- CHECK THE TEMPLATE USED AND THEN CHECK EACH ITEM
+   IN CONTEXT
+3- CHECK THAT ANY OBJECTS ARE THE RIGHT ONES, OR
+   QUERYSETS HAVE THE CORRECT ITEMS
+4- CHECK THAT ANY FORMS ARE OF THE RIGHT CLASS
+5- THINK ABOUT TESTING TEMPLATE LOGIC: ANY FOR/IF
+   MIGHT DESERVE A MINIMAL TEST
+6- FOR POST REQUESTS, MAKE SURE YOU TEST FOR BOTH
+   VALID AND INVALID CASES
+7- CHECK THAT FORM IS RENDERED AND ERRORS ARE DISPLAYED
+"""
 from django.test import TestCase
 from django.utils.html import escape
 
@@ -19,6 +32,39 @@ class HomePageTest(TestCase):
 
 
 class ListViewTest(TestCase):
+
+    def test_uses_list_template(self):
+        list_ = List.objects.create()
+        """
+        USE THE DJANGO TEST CLIENT
+        """
+        response = self.client.get('/lists/' + str(list_.id) + '/')
+        """
+        CHECK THE TEMPLATE USED AND THEN CHECK EACH ITEM
+        IN CONTEXT
+        """
+        self.assertTemplateUsed(response, "list.html")
+
+    def test_passes_context_list_to_templates(self):
+        List.objects.create()
+        correct_list = List.objects.create()
+
+        response = self.client.get('/lists/' + str(correct_list.id) + '/')
+        """
+        CHECK THAT ANY OBJECTS ARE THE RIGHT ONES, OR
+        QUERYSETS HAVE THE CORRECT ITEMS
+        """
+        self.assertEqual(response.context['list'], correct_list)
+
+    def test_displays_item_form(self):
+        list_ = List.objects.create()
+        response = self.client.get('/lists/' + str(list_.id) + '/')
+        """
+        CHECK THAT ANY FORMS ARE OF THE RIGHT CLASS
+        """
+        self.assertIsInstance(response.context['form'], ExistingListItemForm)
+        self.assertContains(response, 'name="text"')
+
     def test_displays_only_items_for_that_list(self):
         correct_list = List.objects.create()
         Item.objects.create(text="item 1", list=correct_list)
@@ -27,24 +73,20 @@ class ListViewTest(TestCase):
         other_list = List.objects.create()
         Item.objects.create(text="Other item 1", list=other_list)
         Item.objects.create(text="Other item 2", list=other_list)
-
+        """
+        THINK ABOUT TESTING TEMPLATE LOGIC: ANY FOR/IF
+        MIGHT DESERVE A MINIMAL TEST
+        """
         response = self.client.get('/lists/' + str(correct_list.id) + '/')
         self.assertContains(response, "item 1")
         self.assertContains(response, "item 2")
         self.assertNotContains(response, "Other item 1")
         self.assertNotContains(response, "Other item 2")
 
-    def test_uses_list_template(self):
-        list_ = List.objects.create()
-        response = self.client.get('/lists/' + str(list_.id) + '/')
-        self.assertTemplateUsed(response, "list.html")
-
-    def test_passes_context_list_to_templates(self):
-        List.objects.create()
-        correct_list = List.objects.create()
-
-        response = self.client.get('/lists/' + str(correct_list.id) + '/')
-        self.assertEqual(response.context['list'], correct_list)
+    """
+    FOR POST REQUESTS, MAKE SURE YOU TEST FOR BOTH
+    VALID AND INVALID CASES
+    """
 
     def test_can_save_a_POST_request_to_an_existing_list(self):
         List.objects.create()
@@ -69,12 +111,6 @@ class ListViewTest(TestCase):
 
         self.assertRedirects(response, '/lists/' + str(correct_list.id) + '/')
 
-    def test_displays_item_form(self):
-        list_ = List.objects.create()
-        response = self.client.get('/lists/' + str(list_.id) + '/')
-        self.assertIsInstance(response.context['form'], ExistingListItemForm)
-        self.assertContains(response, 'name="text"')
-
     def post_invalid_input(self):
         list_ = List.objects.create()
         return self.client.post(
@@ -94,6 +130,9 @@ class ListViewTest(TestCase):
         self.assertIsInstance(response.context['form'], ExistingListItemForm)
 
     def test_for_invalid_input_shows_errors_on_page(self):
+        """
+        CHECK THAT FORM IS RENDERED AND ERRORS ARE DISPLAYED
+        """
         response = self.post_invalid_input()
         self.assertContains(response, escape(EMPTY_ITEM_ERROR))
 
